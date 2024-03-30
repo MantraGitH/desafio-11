@@ -1,0 +1,86 @@
+components:
+  parameters:
+    schemas:
+      BodyProducts:
+        type: object
+        required:
+          - product_name
+          - product_description
+          - product_price
+          - product_stock
+        properties:
+          product_name:
+            type: string
+            description: Nombre del producto
+          product_description:
+            type: string
+            description: Descripción del producto
+          product_price:
+            type: number
+            description: Precio del producto
+          product_stock:
+            type: number
+            description: Cantidad en stock del producto
+        example:
+          product_name: Motorola g13
+          product_description: cel economico gama media
+          product_price: 170000
+          product_stock: 2
+      NewUsers:
+        type: object
+        required:
+          - first_name
+          - last_name
+          - email
+          - password
+        properties:
+          first_name:
+            type: string
+            description: Nombre del Usurario
+          last_name:
+            type: string
+            description: Apellido del usuario
+          email:
+            type: string
+            description: Mail del usuario
+          password:
+            type: string
+            description: Contraseña del usuario
+        example:
+          first_name: Martin
+          last_name: Alvarez
+          email: martinalvarez@gmail.com
+          password: 1234
+          age: 32
+      LoginUsers:
+        type: object
+        required:
+          - first_name
+          - last_name
+          - email
+          - password
+        properties:
+          email:
+            type: string
+            description: Mail del usuario
+          password:
+            type: string
+            description: Contraseña del usuario
+        example:
+          email: martinalvarez@gmail.com
+          password: "1234"
+      PostNewCart:
+        type: object
+        required:
+          - product
+        properties:
+          product:
+            type: string
+            description: Id del producto
+        example:
+          product: '35e4bd76cc2e291dbc5c213c'
+  securitySchemes:
+    BearerAuth: 
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

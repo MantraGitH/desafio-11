@@ -1,0 +1,7 @@
+PORT = 
+SECRET_KEY_JWT = ""
+SESSION_SECRET = ""
+EMAIL = 
+PASSWORD = 
+PERSISTENCE = ""
+MONGO_URL = "mongodb+srv://camiloarias56:Camilo54750843@clusterprdm.as8xfkk.mongodb.net/ecommerce?retryWrites=true&w=majority"

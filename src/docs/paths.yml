@@ -1,0 +1,460 @@
+paths:
+  /api/products:
+    post:
+      tags: 
+      - products
+      summary: Post de nuevo producto en base de datos
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/parameters/schemas/BodyProducts'
+        required: true      
+      responses: 
+        200:
+          description: Se registró el producto correctamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schema/products/Postproduct'
+        404: 
+         description: Error en validación del body
+         content:
+          application/json:
+            schema:
+              $ref: '#/components/schema/errors/ValidationSchemaError'
+        500:
+          description: Error del servidor
+          content:
+            application/json:
+            schema:
+            $ref: '#/components/schema/errors/NotFound'
+    get:
+      tags:
+      - products
+      summary: Listar todos los productos
+      responses:
+        200:
+          description: Lista de productos
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schema/products/GetAllProducts'
+        404: 
+          description: Error en validación del body
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schema/errors/ValidationSchemaError'
+        500:
+          description: Error del servidor
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schema/errors/NotFound'
+
+  /api/products/{id}:
+    get:
+      tags:
+      - products
+      summary: Buscar producto por id
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: id del producto
+          schema:
+            type: string
+      responses:
+        200:
+          description: Prodcuto encontrado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schema/products/Postproduct'
+        404: 
+          description: Error en validación del body
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schema/errors/ValidationSchemaError'
+        500:
+          description: Error del servidor
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schema/errors/NotFound'
+    put:
+      tags:
+      - products
+      summary: Actualización del producto
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: Id del producto a actualizar
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/parameters/schemas/BodyProducts'
+        required: true
+      responses:
+        200:
+          description: Se actualizó el producto correctamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schema/products/Postproduct'
+        404: 
+          description: Error en validación del body
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schema/errors/ValidationSchemaError'
+        500:
+          description: Error del servidor
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schema/errors/NotFound'
+    delete:
+      tags:
+      - products
+      summary: Eliminar un producto
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: Id del producto a eliminar
+          schema:
+            type: string
+      responses:
+        200:
+          description: Se elimimó el producto correctamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schema/products/Postproduct'
+        404: 
+          description: Error en validación del body
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schema/errors/ValidationSchemaError'
+        500:
+          description: Error del servidor
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schema/errors/NotFound'
+
+  /api/users/register:
+    post:
+      tags:
+      - users
+      summary: Registro de un nuevo usuario
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/parameters/schemas/NewUsers'
+      responses:
+        200:
+          description: Registro exitoso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schema/users/PostUser'
+        404: 
+          description: Error en validación del body
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schema/errors/ValidationSchemaError'
+        500:
+          description: Error del servidor
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schema/errors/NotFound'
+  
+  /api/users/login:
+    post:
+      tags:
+      - users
+      summary: Login de usuario
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/parameters/schemas/LoginUsers'
+        required: true
+      responses:
+        200:
+          description: Usuario se logueó correctamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schema/users/LoginUser'
+        401:
+          description: Usuario no autorizado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schema/errors/ErrorUnauthorized'
+        404: 
+          description: Error en validación del body
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schema/errors/ValidationSchemaError'
+        500:
+          description: Error del servidor
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schema/errors/NotFound'
+  
+  /api/users/profile:
+    get:
+      tags:
+      - users
+      summary: Perfil del usuario
+      responses:
+        200:
+          description: Datos del usuario
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schema/users/ProfileUser'
+        401:
+          description: Usuario no autorizado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schema/errors/ErrorUnauthorized'
+        404: 
+          description: Error en validación del body
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schema/errors/ValidationSchemaError'
+        500:
+          description: Error del servidor
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schema/errors/NotFound'
+      security:
+        - BearerAuth: []
+
+  /api/users/profile-cookie:
+    get:
+      tags:
+      - users
+      summary: Datos del usuario en cookie
+      responses:
+        200:
+          description: Datos del usuario en cookie
+          contet:
+            application/json:
+              schema:
+                $ref: '#/components/schema/users/ProfileUser'
+        401:
+          description: Usuario no autorizado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schema/errors/ErrorUnauthorized'
+        404: 
+          description: Error en validación del body
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schema/errors/ValidationSchemaError'
+        500:
+          description: Error del servidor
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schema/errors/NotFound'
+
+  /api/carts:
+    post:
+      tags:
+      - carts
+      summary: Crear un nuevo carrito
+      requestBody:
+        content:
+          application/json:
+            $ref: '#/components/parameters/schemas/PostNewCart'
+          requited: true
+      responses:
+        200:
+          description: Se creó el carrito correctamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schema/carts/NewCart'
+    get:
+      tags:
+      - carts
+      summary: Listar todos los carritos
+      responses:
+        200:
+          description: Lista de productos
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schema/carts/GetAllCarts'
+        404: 
+          description: Error en validación del body
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schema/errors/ValidationSchemaError'
+        500:
+          description: Error del servidor
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schema/errors/NotFound'
+  
+  /api/carts/{id}:
+    get:
+      tags:
+      - carts
+      summary: Buscar carrito por id
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: id del carrito
+          schema:
+            type: string
+      responses:
+        200:
+          description: Carrito encontrado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schema/carts/NewCart'
+        404: 
+          description: Error en validación del body
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schema/errors/ValidationSchemaError'
+        500:
+          description: Error del servidor
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schema/errors/NotFound'
+    delete:
+      tags:
+      - carts
+      summary: Borrar carrito por id
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: id del carrito
+          schema:
+            type: string
+      responses:
+        200:
+          description: Se elimimó el carrito correctamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schema/carts/NewCart'
+        404: 
+          description: Error en validación del body
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schema/errors/ValidationSchemaError'
+        500:
+          description: Error del servidor
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schema/errors/NotFound'
+
+  /api/carts/{idCart}/products/{idProd}:
+    post:
+      tags:
+      - carts
+      summary: Agregar producto al carrito
+      parameters:
+        - in: path
+          name: idCart
+          required: true
+          schema:
+            type: string
+            description: ID del carrito al que se va a agregar el producto
+        - in: path
+          name: idProd
+          required: true
+          schema:
+            type: string
+            description: ID del producto que se va a agregar al carrito
+      responses:
+        200:
+          description: Producto agregado al carrito correctamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schema/carts/NewCart'
+        404: 
+          description: Error en validación del body
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schema/errors/ValidationSchemaError'
+        500:
+          description: Error del servidor
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schema/errors/NotFound'
+    delete:
+      tags:
+      - carts
+      summary: Borrar producto del carrito
+      parameters:
+        - in: path
+          name: idCart
+          required: true
+          schema:
+            type: string
+            description: ID del carrito al que se va a agregar el producto
+        - in: path
+          name: idProd
+          required: true
+          schema:
+            type: string
+            description: ID del producto que se va a agregar al carrito
+      responses:
+        200:
+          description: Se elimimó el producto del carrito
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schema/carts/NewCart'
+        404: 
+          description: Error en validación del body
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schema/errors/ValidationSchemaError'
+        500:
+          description: Error del servidor
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schema/errors/NotFound'
